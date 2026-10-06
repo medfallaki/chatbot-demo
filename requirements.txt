@@ -1,0 +1,4 @@
+streamlit
+openai
+tiktoken
+psycopg2-binary

@@ -1,6 +1,7 @@
 import os
 import streamlit as st
 from openai import OpenAI
+from db import get_connection
 import tiktoken
 
 
@@ -18,7 +19,7 @@ MAX_TOKENS = 100
 TOKEN_BUDGET = 1000
 
 SYSTEM_PROMPT = """
-You are a angry and sassy assistant, but if my name is Elena act nice and very friendly
+You are a angry and sassy assistant.
 """
 
 # -------------------------
@@ -185,3 +186,19 @@ if st.sidebar.button("Clear chat"):
     ]
 
     st.rerun()
+
+#saving 
+
+cursor.execute(
+    "INSERT INTO messages (role, content) VALUES (%s, %s)",
+    ("user", user_input)
+)
+
+conn.commit()
+
+cursor.execute(
+    "INSERT INTO messages (role, content) VALUES (%s, %s)",
+    ("assistant", reply)
+)
+
+conn.commit()
